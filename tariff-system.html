@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>التعريفة الجمركية · سوريا</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231e3a5f'/%3E%3Ctext x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3E🛃%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231e3a5f'/%3E%3Ctext x='50' y='68' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3E🛃%3C/text%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="تعريفة سوريا">
+<meta name="theme-color" content="#0b0f15">
+<link rel="manifest" href="manifest.json">
+<style>
+/* نفس الأنماط السابقة - اختصاراً سأضعها مختصرة لكن يمكنك استخدام الأنماط الكاملة من الإصدار السابق */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0b0f15;--bg2:#11161d;--bg3:#1c222b;--border:#2a323d;--text:#edf2f7;--text2:#9ca3af;--text3:#6b7280;--accent:#3b82f6;--accent2:#2563eb;--radius:10px}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
+.app{max-width:1300px;margin:0 auto;padding:24px 20px}
+.header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.header-title{display:flex;align-items:center;gap:14px}
+.icon{width:44px;height:44px;background:linear-gradient(135deg,#1e3a5f,#0f2b44);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:24px}
+.header h1{font-size:22px;font-weight:600}
+.header p{font-size:13px;color:var(--text2);margin-top:4px}
+.badge{background:var(--bg3);border:1px solid var(--border);border-radius:40px;padding:6px 14px;font-family:monospace;font-size:12px;color:var(--text2)}
+.upload-area{background:var(--bg2);border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;margin-bottom:30px;transition:0.2s;cursor:pointer}
+.upload-area.drag-over{border-color:var(--accent2);background:rgba(59,130,246,0.1)}
+.upload-btn{background:var(--accent2);border:none;color:white;padding:10px 24px;border-radius:30px;font-family:inherit;font-size:14px;cursor:pointer;margin-top:12px}
+.file-info{font-size:12px;color:var(--text2);margin-top:12px}
+.reset-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:30px;font-size:12px;cursor:pointer;margin-right:10px}
+.reset-btn:hover{border-color:var(--accent2);color:var(--text)}
+.search-section{margin-bottom:20px}
+.search-box{position:relative;margin-bottom:14px}
+.search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:18px;pointer-events:none}
+.search-input{width:100%;padding:14px 48px 14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:15px;font-family:inherit}
+.search-input:focus{outline:none;border-color:var(--accent2);box-shadow:0 0 0 2px rgba(59,130,246,0.2)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filter-btn{background:var(--bg2);border:1px solid var(--border);padding:5px 14px;border-radius:32px;font-size:12px;color:var(--text2);cursor:pointer}
+.filter-btn.active{background:var(--accent2);border-color:var(--accent2);color:white}
+.stats-bar{display:flex;justify-content:space-between;align-items:baseline;margin:12px 0 10px;font-size:13px;color:var(--text2);flex-wrap:wrap;gap:10px}
+.sort-select{background:var(--bg2);border:1px solid var(--border);padding:5px 10px;border-radius:6px;color:var(--text2);font-size:12px}
+.export-btn{background:#2e4a2e;border:1px solid #3b7a3b;padding:5px 16px;border-radius:32px;font-size:12px;color:#c6f7c6;cursor:pointer;transition:0.2s}
+.export-btn:hover{background:#3e6a3e;border-color:#5f9c5f;color:white}
+.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow-x:auto;background:var(--bg2)}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
+thead{background:var(--bg3);position:sticky;top:0;z-index:2}
+th{padding:12px 14px;text-align:right;font-weight:500;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer}
+td{padding:10px 14px;vertical-align:middle;border-bottom:1px solid var(--border)}
+tbody tr:hover{background:rgba(59,130,246,0.08);cursor:pointer}
+.col-hs{font-family:monospace;color:var(--accent);white-space:nowrap}
+.negative-badge{background:#2d1f1f;border:1px solid #7f2a2a;border-radius:5px;padding:2px 8px;font-size:11px;color:#f87171}
+.num-high{color:#f97316}.num-med{color:#eab308}.num-low{color:#22c55e}
+mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px}
+.pagination{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
+.page-btn{min-width:34px;padding:5px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);cursor:pointer}
+.page-btn.active{background:var(--accent2);color:white}
+.empty-state{text-align:center;padding:60px 20px;background:var(--bg2);border-radius:var(--radius);margin-top:20px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:500px;width:90%}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.modal-hs{font-family:monospace;font-size:26px;font-weight:600;color:var(--accent)}
+.modal-close{background:none;border:none;color:var(--text3);font-size:24px;cursor:pointer}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:18px 0}
+.modal-card{background:var(--bg3);border-radius:14px;padding:12px;text-align:center}
+.modal-card-label{font-size:11px;color:var(--text3);margin-bottom:6px}
+.modal-card-value{font-family:monospace;font-size:20px}
+.modal-unit{background:var(--bg3);padding:8px 12px;border-radius:10px;font-size:13px;display:inline-block}
+.install-note{background:var(--bg3);border-radius:var(--radius);padding:10px 15px;margin-bottom:20px;font-size:12px;text-align:center;border-right:3px solid var(--accent2)}
+@media (max-width:680px){.app{padding:16px}th,td{padding:8px 10px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-title"><div class="icon">🛃</div><div><h1>التعريفة الجمركية</h1><p>سوريا · رفع الملف مضمون</p></div></div>
+    <div><span class="badge" id="totalBadge"></span><button class="reset-btn" id="resetBtn">🔄 رفع ملف جديد</button></div>
+  </div>
+  <div class="install-note">📌 <strong>تثبيت التطبيق:</strong> ⋮ → تثبيت التطبيق (أو أضف للشاشة الرئيسية)</div>
+
+  <!-- منطقة رفع الملف تظهر دائماً في البداية -->
+  <div id="uploadArea" class="upload-area">
+    <div>📂 اسحب ملف CSV هنا أو انقر لاختياره</div>
+    <button class="upload-btn" id="uploadBtn">اختر ملف التعريفة</button>
+    <input type="file" id="fileInput" accept=".csv" style="display: none;">
+    <div class="file-info" id="fileInfo"></div>
+  </div>
+
+  <div id="controls" style="display: none;">
+    <div class="search-section">
+      <div class="search-box"><span class="search-icon">🔍</span><input type="text" class="search-input" id="searchInput" placeholder="ابحث بكود HS أو وصف البضاعة ..."></div>
+      <div class="filters">
+        <span style="font-size:12px;">تصفية :</span>
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="negative">قائمة سلبية</button>
+        <button class="filter-btn" data-filter="invoice">فاتورة (الوحدة)</button>
+        <button class="filter-btn" data-filter="high">رسم > 100</button>
+        <button class="filter-btn" data-filter="low">رسم ≤ 10</button>
+        <button class="filter-btn" data-filter="zero">رسم صفر</button>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <span>🞄 عرض <span id="resultCount">0</span> نتيجة</span>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <select id="sortSelect" class="sort-select"><option value="default">ترتيب: كود HS</option><option value="duty-asc">الرسم الكلي: من الأقل</option><option value="duty-desc">الرسم الكلي: من الأعلى</option></select>
+        <button id="exportBtn" class="export-btn">📥 تصدير المظهر الحالي (Excel/CSV)</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading" style="display: none; text-align:center; padding:50px;">⏳ جاري التحميل...</div>
+  <div class="table-wrapper" id="tableWrapper" style="display: none;">
+    <table><thead><tr><th data-col="0">كود HS</th><th data-col="1">وصف البضاعة</th><th>الوحدة</th><th data-col="3">رسم قياسي</th><th>بدل خدمات</th><th data-col="5">الرسم الكلي</th></tr></thead><tbody id="tableBody"></tbody></table>
+  </div>
+  <div class="empty-state" id="emptyState" style="display: none;"><div>📭</div><p>لا توجد نتائج</p></div>
+  <div class="pagination" id="paginationArea"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modal-header"><div><div class="modal-hs" id="modalHS"></div><div id="modalDesc"></div></div><button class="modal-close" onclick="closeModal()">✕</button></div><div id="modalNegative" style="display:none; background:#2c1a1a; padding:10px; border-radius:8px; margin:12px 0;"><span class="negative-badge">⛔ ممنوع (قائمة سلبية)</span></div><div class="modal-grid" id="modalGrid"><div><div class="modal-card-label">رسم قياسي</div><div class="modal-card-value" id="modalStandard"></div></div><div><div class="modal-card-label">بدل خدمات</div><div class="modal-card-value" id="modalService"></div></div><div><div class="modal-card-label">رسم كلي</div><div class="modal-card-value" id="modalTotal"></div></div></div><div id="modalUnit"></div></div></div>
+
+<script>
+    let tariffData = [];
+    let filteredData = [];
+    let currentPage = 1;
+    let currentFilter = "all";
+    let currentSort = "default";
+    let searchKeyword = "";
+    let sortColumn = -1;
+    let sortDirection = 1;
+    const PAGE_SIZE = 45;
+    const STORAGE_KEY = "syrian_customs_tariff";
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const fileInfo = document.getElementById('fileInfo');
+    const controlsDiv = document.getElementById('controls');
+    const loadingDiv = document.getElementById('loading');
+    const tableWrapper = document.getElementById('tableWrapper');
+    const emptyStateDiv = document.getElementById('emptyState');
+    const resetBtn = document.getElementById('resetBtn');
+    const totalBadge = document.getElementById('totalBadge');
+    const exportBtn = document.getElementById('exportBtn');
+
+    function saveToLocalStorage(data) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); return true; } catch(e) { return false; }
+    }
+
+    // تحميل البيانات من LocalStorage وعرضها
+    function loadFromLocalStorageAndDisplay() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                tariffData = JSON.parse(stored);
+                if (Array.isArray(tariffData) && tariffData.length) {
+                    totalBadge.innerText = `${tariffData.length} بند (محفوظ)`;
+                    controlsDiv.style.display = 'block';
+                    tableWrapper.style.display = 'block';
+                    loadingDiv.style.display = 'none';
+                    uploadArea.style.display = 'none';
+                    renderTable();
+                    return true;
+                }
+            } catch(e) {}
+        }
+        return false;
+    }
+
+    function parseCSV(csvText) {
+        const rows = [];
+        let row = [], field = "", inQuotes = false;
+        let i = 0, len = csvText.length;
+        while (i < len) {
+            const ch = csvText[i];
+            if (ch === '"') { inQuotes = !inQuotes; i++; continue; }
+            if (ch === ',' && !inQuotes) { row.push(field); field = ""; i++; continue; }
+            if (ch === '\n' && !inQuotes) { row.push(field); if (row.length) rows.push(row); row = []; field = ""; i++; continue; }
+            field += ch; i++;
+        }
+        if (field.length || row.length) { row.push(field); if (row.length) rows.push(row); }
+        return rows;
+    }
+
+    function convertToTariff(rows) {
+        if (rows.length < 2) return [];
+        const header = rows[0];
+        let idxHS=-1, idxDesc=-1, idxUnit=-1, idxDuty=-1, idxService=-1, idxTotal=-1;
+        for (let i=0; i<header.length; i++) {
+            let col = header[i].toString().trim();
+            if (col.includes('رمز النظام') || col.includes('المتناسق') || col.includes('HS')) idxHS=i;
+            else if (col.includes('الاسم التجاري') || col.includes('وصف')) idxDesc=i;
+            else if (col.includes('الوحدة')) idxUnit=i;
+            else if (col.includes('رسم الاستيراد') && !col.includes('الكلي')) idxDuty=i;
+            else if (col.includes('بدل خدمات')) idxService=i;
+            else if (col.includes('رسم الاستيراد الكلي') || col.includes('الكلي')) idxTotal=i;
+        }
+        if (idxHS===-1) idxHS=1; if (idxDesc===-1) idxDesc=4; if (idxUnit===-1) idxUnit=8;
+        if (idxDuty===-1) idxDuty=5; if (idxService===-1) idxService=6; if (idxTotal===-1) idxTotal=7;
+        const result = [];
+        for (let i=1; i<rows.length; i++) {
+            const row = rows[i];
+            if (row.length <= Math.max(idxHS, idxDesc)) continue;
+            let hs = row[idxHS]?.trim() || '';
+            let desc = row[idxDesc]?.trim() || '';
+            let unit = (idxUnit < row.length && row[idxUnit]?.trim()) ? row[idxUnit].trim() : '—';
+            let duty = (idxDuty < row.length) ? row[idxDuty].trim() : '0';
+            let service = (idxService < row.length) ? row[idxService].trim() : '0';
+            let total = (idxTotal < row.length) ? row[idxTotal].trim() : duty;
+            if (hs === '') continue;
+            result.push([hs, desc, unit, duty, service, total]);
+        }
+        return result;
+    }
+
+    // دالة رئيسية لمعالجة محتوى CSV (من رفع أو من مضمن)
+    function processCSV(csvText, sourceName = 'ملف') {
+        loadingDiv.style.display = 'block';
+        const rows = parseCSV(csvText);
+        const newData = convertToTariff(rows);
+        if (newData.length === 0) {
+            fileInfo.innerText = `❌ ${sourceName} لا يحتوي على بيانات صالحة.`;
+            loadingDiv.style.display = 'none';
+            return false;
+        }
+        tariffData = newData;
+        saveToLocalStorage(tariffData);
+        totalBadge.innerText = `${tariffData.length} بند (محفوظ)`;
+        controlsDiv.style.display = 'block';
+        tableWrapper.style.display = 'block';
+        loadingDiv.style.display = 'none';
+        uploadArea.style.display = 'none';
+        fileInfo.innerText = `✅ تم تحميل ${tariffData.length} بند من ${sourceName}.`;
+        renderTable();
+        return true;
+    }
+
+    // رفع ملف من المستخدم
+    function loadFile(file) {
+        if (!file) return;
+        fileInfo.innerText = `جاري قراءة: ${file.name} ...`;
+        const reader = new FileReader();
+        reader.onload = function(e) { processCSV(e.target.result, file.name); };
+        reader.onerror = () => { fileInfo.innerText = 'خطأ في قراءة الملف'; };
+        reader.readAsText(file, 'UTF-8');
+    }
+
+    // محاولة تحميل ملف مضمن (اختياري)
+    async function tryEmbeddedCSV() {
+        try {
+            const response = await fetch('tariff_data.csv');
+            if (response.ok) {
+                const csvText = await response.text();
+                if (csvText.trim().length > 0) {
+                    processCSV(csvText, 'الملف المضمن');
+                    return true;
+                }
+            }
+        } catch(e) { console.log('لا يوجد ملف مضمن'); }
+        return false;
+    }
+
+    // إعادة تعيين: حذف البيانات وإظهار رفع الملف
+    function resetAndShowUpload() {
+        if (confirm('سيتم حذف البيانات المخزنة. هل تريد رفع ملف جديد؟')) {
+            localStorage.removeItem(STORAGE_KEY);
+            tariffData = [];
+            filteredData = [];
+            controlsDiv.style.display = 'none';
+            tableWrapper.style.display = 'none';
+            emptyStateDiv.style.display = 'none';
+            uploadArea.style.display = 'block';
+            fileInfo.innerText = 'تم حذف البيانات. يرجى رفع ملف CSV.';
+            totalBadge.innerText = 'لم يتم تحميل';
+            loadingDiv.style.display = 'none';
+        }
+    }
+
+    // دالات العرض (نفس السابق)
+    function isPercentValue(val) { return typeof val === 'string' && (val.includes('%') || val.toLowerCase().includes('فاتورة')); }
+    function parseDuty(val) { if (val === "قائمة سلبية") return NaN; if (typeof val === 'string' && val.includes('%')) { let n = parseFloat(val); return isNaN(n)?0:n; } let n = parseFloat(val); return isNaN(n)?0:n; }
+    function formatNumber(v) { if (isNaN(v) || v==="") return v; return v.toLocaleString('ar'); }
+    function getDutyClass(val) { if (val === "قائمة سلبية") return ''; let n = parseDuty(val); if (isNaN(n)) return ''; if (n>100) return 'num-high'; if (n>20) return 'num-med'; return 'num-low'; }
+
+    function applyFiltersAndSort() {
+        if (!tariffData.length) return [];
+        let data = [...tariffData];
+        if (searchKeyword.trim()) {
+            const kw = searchKeyword.trim().toLowerCase();
+            const isCode = /^[\d\.]+$/.test(kw);
+            data = data.filter(row => {
+                if (isCode) return row[0].replace(/\./g,'').startsWith(kw.replace(/\./g,'')) || row[0].startsWith(kw);
+                return row[0].toLowerCase().includes(kw) || row[1].toLowerCase().includes(kw);
+            });
+        }
+        if (currentFilter === 'invoice') data = data.filter(r => r[2] === "فاتورة");
+        else if (currentFilter === 'negative') data = data.filter(r => r[5] === "قائمة سلبية");
+        else if (currentFilter === 'high') data = data.filter(r => { if (r[5] === "قائمة سلبية") return false; if (isPercentValue(r[5])) return false; let v = parseDuty(r[5]); return !isNaN(v) && v > 100; });
+        else if (currentFilter === 'low') data = data.filter(r => { if (r[5] === "قائمة سلبية") return false; if (isPercentValue(r[5])) return false; let v = parseDuty(r[5]); return !isNaN(v) && v <= 10 && v >= 0; });
+        else if (currentFilter === 'zero') data = data.filter(r => { if (r[5] === "قائمة سلبية") return false; if (isPercentValue(r[5])) return false; let v = parseDuty(r[5]); return !isNaN(v) && v === 0; });
+        if (currentSort === 'duty-asc') data.sort((a,b)=> (parseDuty(a[5])||0) - (parseDuty(b[5])||0));
+        else if (currentSort === 'duty-desc') data.sort((a,b)=> (parseDuty(b[5])||0) - (parseDuty(a[5])||0));
+        else if (sortColumn >= 0) { data.sort((a,b)=>{ const av = a[sortColumn]||'', bv = b[sortColumn]||''; const anum = parseFloat(av), bnum = parseFloat(bv); if (!isNaN(anum) && !isNaN(bnum)) return (anum - bnum) * sortDirection; return av.localeCompare(bv, 'ar') * sortDirection; }); }
+        return data;
+    }
+
+    function renderTable() {
+        if (!tariffData.length) return;
+        filteredData = applyFiltersAndSort();
+        const total = filteredData.length;
+        document.getElementById("resultCount").innerText = total.toLocaleString('ar');
+        if (total === 0) { tableWrapper.style.display = "none"; emptyStateDiv.style.display = "block"; return; }
+        tableWrapper.style.display = "block"; emptyStateDiv.style.display = "none";
+        const totalPages = Math.ceil(total / PAGE_SIZE);
+        if (currentPage > totalPages) currentPage = 1;
+        const start = (currentPage-1)*PAGE_SIZE;
+        const pageRows = filteredData.slice(start, start+PAGE_SIZE);
+        const tbody = document.getElementById("tableBody");
+        const kw = searchKeyword.trim();
+        tbody.innerHTML = pageRows.map(row => {
+            const isNeg = row[5] === "قائمة سلبية";
+            const isPerc = !isNeg && isPercentValue(row[5]);
+            let displayUnit = row[2];
+            if (!isNeg && isPerc) displayUnit = "فاتورة";
+            const totalDisplay = isNeg ? `<span class="negative-badge">سلبية</span>` : (isPerc ? `<span class="${getDutyClass(row[5])}">${row[5]}</span>` : `<span class="${getDutyClass(row[5])}">${formatNumber(parseDuty(row[5]))}</span>`);
+            const stdDisplay = isNeg ? "—" : (isPercentValue(row[3]) ? row[3] : formatNumber(parseDuty(row[3])));
+            const svcDisplay = isNeg ? "—" : (isPercentValue(row[4]) ? row[4] : formatNumber(parseDuty(row[4])));
+            const hsHighlight = kw ? row[0].replace(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi'), m=>`<mark>${m}</mark>`) : row[0];
+            const descHighlight = kw ? row[1].replace(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi'), m=>`<mark>${m}</mark>`) : row[1];
+            return `<tr onclick='showDetail(${JSON.stringify(row).replace(/'/g, "&#39;")})'><td class="col-hs">${hsHighlight}</td><td>${descHighlight}</td><td>${displayUnit}</td><td>${stdDisplay}</td><td>${svcDisplay}</td><td>${totalDisplay}</td></tr>`;
+        }).join('');
+        const pgDiv = document.getElementById("paginationArea");
+        if (totalPages <= 1) { pgDiv.innerHTML = ""; return; }
+        let pagHtml = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1 ? 'disabled' : ''}>‹</button>`;
+        let pages = []; if (totalPages <= 6) for (let i=1;i<=totalPages;i++) pages.push(i); else { pages.push(1); if (currentPage>3) pages.push('...'); for (let i=Math.max(2,currentPage-1); i<=Math.min(totalPages-1,currentPage+1); i++) pages.push(i); if (currentPage < totalPages-2) pages.push('...'); pages.push(totalPages); }
+        pages.forEach(p => { if (p==='...') pagHtml+=`<span class="page-info">…</span>`; else pagHtml+=`<button class="page-btn ${p===currentPage ? 'active':''}" onclick="goPage(${p})">${p}</button>`; });
+        pagHtml += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages ? 'disabled' : ''}>›</button>`;
+        pgDiv.innerHTML = pagHtml;
+    }
+    window.goPage = function(p) { const totalPages = Math.ceil(filteredData.length/PAGE_SIZE); if (p<1 || p>totalPages) return; currentPage=p; renderTable(); };
+    window.showDetail = function(row) {
+        const isNeg = row[5] === "قائمة سلبية";
+        document.getElementById("modalHS").innerText = row[0];
+        document.getElementById("modalDesc").innerText = row[1];
+        document.getElementById("modalNegative").style.display = isNeg ? "block" : "none";
+        document.getElementById("modalGrid").style.display = isNeg ? "none" : "grid";
+        if (!isNeg) {
+            document.getElementById("modalStandard").innerText = isPercentValue(row[3]) ? row[3] : formatNumber(parseDuty(row[3]));
+            document.getElementById("modalService").innerText = isPercentValue(row[4]) ? row[4] : formatNumber(parseDuty(row[4]));
+            document.getElementById("modalTotal").innerText = isPercentValue(row[5]) ? row[5] : formatNumber(parseDuty(row[5]));
+        }
+        let displayUnit = row[2];
+        if (!isNeg && isPercentValue(row[5])) displayUnit = "فاتورة";
+        document.getElementById("modalUnit").innerHTML = `الوحدة: ${displayUnit}`;
+        document.getElementById("modalOverlay").classList.add("open");
+    };
+    window.closeModal = function() { document.getElementById("modalOverlay").classList.remove("open"); };
+
+    function exportToCSV() {
+        if (!filteredData.length) { alert("⚠️ لا توجد بيانات للتصدير."); return; }
+        const headers = ["كود HS", "وصف البضاعة", "الوحدة", "رسم قياسي", "بدل خدمات", "رسم الاستيراد الكلي"];
+        const rows = filteredData.map(row => [row[0], row[1], row[2], row[3], row[4], row[5]]);
+        let csvContent = headers.join(",") + "\n";
+        rows.forEach(row => { const escapedRow = row.map(cell => { let s = String(cell); if (s.includes(",") || s.includes('"') || s.includes("\n")) s = '"' + s.replace(/"/g, '""') + '"'; return s; }).join(","); csvContent += escapedRow + "\n"; });
+        const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a"); const url = URL.createObjectURL(blob); link.href = url; const timestamp = new Date().toISOString().slice(0,19).replace(/:/g, '-'); link.setAttribute("download", `تعريفة_سوريا_${timestamp}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+    }
+
+    // ربط الأحداث
+    document.getElementById("searchInput").addEventListener("input", (e) => { searchKeyword = e.target.value; currentPage=1; renderTable(); });
+    document.querySelectorAll(".filter-btn").forEach(btn => { btn.addEventListener("click", function() { document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active")); this.classList.add("active"); currentFilter = this.dataset.filter; currentPage=1; renderTable(); }); });
+    document.getElementById("sortSelect").addEventListener("change", (e) => { currentSort = e.target.value; sortColumn = -1; renderTable(); });
+    document.querySelectorAll("th[data-col]").forEach(th => { th.addEventListener("click", () => { const col = parseInt(th.dataset.col); if (sortColumn === col) sortDirection *= -1; else { sortColumn = col; sortDirection = 1; } currentSort = "custom"; document.getElementById("sortSelect").value = "default"; renderTable(); }); });
+    exportBtn.addEventListener("click", exportToCSV);
+    resetBtn.addEventListener("click", resetAndShowUpload);
+    uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag-over'));
+    uploadArea.addEventListener('drop', (e) => { e.preventDefault(); uploadArea.classList.remove('drag-over'); if(e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]); });
+    uploadArea.addEventListener('click', () => fileInput.click());
+    uploadBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
+    fileInput.addEventListener('change', (e) => { if(e.target.files.length) loadFile(e.target.files[0]); });
+
+    // بدء التشغيل: أولاً محاولة تحميل بيانات مخزنة، وإلا إظهار رفع الملف
+    if (!loadFromLocalStorageAndDisplay()) {
+        // إذا لم توجد بيانات مخزنة، نحاول تحميل ملف مضمن (اختياري)
+        tryEmbeddedCSV().then(success => {
+            if (!success) {
+                // في حال عدم وجود ملف مضمن ولا بيانات مخزنة، نظهر رفع الملف
+                uploadArea.style.display = 'block';
+                loadingDiv.style.display = 'none';
+                fileInfo.innerText = 'لم يتم العثور على بيانات. يرجى رفع ملف CSV.';
+            }
+        });
+    }
+</script>
+</body>
+</html>
