@@ -12,10 +12,10 @@
 <meta name="theme-color" content="#0b0f15">
 <link rel="manifest" href="manifest.json">
 <style>
-/* نفس الأنماط السابقة - اختصاراً سأضعها مختصرة لكن يمكنك استخدام الأنماط الكاملة من الإصدار السابق */
+/* الأنماط الأساسية */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0b0f15;--bg2:#11161d;--bg3:#1c222b;--border:#2a323d;--text:#edf2f7;--text2:#9ca3af;--text3:#6b7280;--accent:#3b82f6;--accent2:#2563eb;--radius:10px}
-body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:var(--text);line-height:1.4;font-size:16px}
 .app{max-width:1300px;margin:0 auto;padding:24px 20px}
 .header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border)}
 .header-title{display:flex;align-items:center;gap:14px}
@@ -41,33 +41,186 @@ body{font-family:'IBM Plex Sans Arabic',sans-serif;background:var(--bg);color:va
 .sort-select{background:var(--bg2);border:1px solid var(--border);padding:5px 10px;border-radius:6px;color:var(--text2);font-size:12px}
 .export-btn{background:#2e4a2e;border:1px solid #3b7a3b;padding:5px 16px;border-radius:32px;font-size:12px;color:#c6f7c6;cursor:pointer;transition:0.2s}
 .export-btn:hover{background:#3e6a3e;border-color:#5f9c5f;color:white}
-.table-wrapper{border:1px solid var(--border);border-radius:var(--radius);overflow-x:auto;background:var(--bg2)}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
-thead{background:var(--bg3);position:sticky;top:0;z-index:2}
-th{padding:12px 14px;text-align:right;font-weight:500;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer}
-td{padding:10px 14px;vertical-align:middle;border-bottom:1px solid var(--border)}
-tbody tr:hover{background:rgba(59,130,246,0.08);cursor:pointer}
-.col-hs{font-family:monospace;color:var(--accent);white-space:nowrap}
-.negative-badge{background:#2d1f1f;border:1px solid #7f2a2a;border-radius:5px;padding:2px 8px;font-size:11px;color:#f87171}
-.num-high{color:#f97316}.num-med{color:#eab308}.num-low{color:#22c55e}
-mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px}
-.pagination{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:24px}
-.page-btn{min-width:34px;padding:5px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text2);cursor:pointer}
-.page-btn.active{background:var(--accent2);color:white}
-.empty-state{text-align:center;padding:60px 20px;background:var(--bg2);border-radius:var(--radius);margin-top:20px}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:24px;max-width:500px;width:90%}
-.modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
-.modal-hs{font-family:monospace;font-size:26px;font-weight:600;color:var(--accent)}
-.modal-close{background:none;border:none;color:var(--text3);font-size:24px;cursor:pointer}
-.modal-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:18px 0}
-.modal-card{background:var(--bg3);border-radius:14px;padding:12px;text-align:center}
-.modal-card-label{font-size:11px;color:var(--text3);margin-bottom:6px}
-.modal-card-value{font-family:monospace;font-size:20px}
-.modal-unit{background:var(--bg3);padding:8px 12px;border-radius:10px;font-size:13px;display:inline-block}
-.install-note{background:var(--bg3);border-radius:var(--radius);padding:10px 15px;margin-bottom:20px;font-size:12px;text-align:center;border-right:3px solid var(--accent2)}
-@media (max-width:680px){.app{padding:16px}th,td{padding:8px 10px}}
+
+/* ========== التعديل الأساسي: حاوية الجدول تمرير أفقي ========== */
+.table-wrapper {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;          /* ← التمرير الأفقي */
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch; /* تمرير ناعم للآيفون */
+    background: var(--bg2);
+    touch-action: pan-x pan-y; /* يسمح بالسحب أفقي/عمودي */
+}
+
+/* الجدول يحافظ على حجمه ولا يتقلص */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;           /* حجم خط مناسب */
+    min-width: 800px;          /* يمنع انضغاط الأعمدة على الجوال */
+    white-space: nowrap;       /* يمنع التفاف النص داخل الخلايا */
+}
+
+/* تحسين المسافات الداخلية */
+th, td {
+    padding: 10px 14px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border);
+}
+
+/* رأس الجدول */
+thead {
+    background: var(--bg3);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+th {
+    text-align: right;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text2);
+    white-space: nowrap;
+    cursor: pointer;
+}
+tbody tr:hover {
+    background: rgba(59,130,246,0.08);
+    cursor: pointer;
+}
+.col-hs {
+    font-family: monospace;
+    color: var(--accent);
+    white-space: nowrap;
+}
+.negative-badge {
+    background:#2d1f1f;
+    border:1px solid #7f2a2a;
+    border-radius:5px;
+    padding:2px 8px;
+    font-size:11px;
+    color:#f87171;
+}
+.num-high{color:#f97316}
+.num-med{color:#eab308}
+.num-low{color:#22c55e}
+mark {
+    background:rgba(59,130,246,0.4);
+    color:white;
+    border-radius:3px;
+    padding:0 2px;
+}
+.pagination {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:24px;
+}
+.page-btn {
+    min-width:34px;
+    padding:5px 10px;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:8px;
+    color:var(--text2);
+    cursor:pointer;
+}
+.page-btn.active {
+    background:var(--accent2);
+    color:white;
+}
+.empty-state {
+    text-align:center;
+    padding:60px 20px;
+    background:var(--bg2);
+    border-radius:var(--radius);
+    margin-top:20px;
+}
+.modal-overlay {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.8);
+    backdrop-filter:blur(4px);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+}
+.modal-overlay.open {
+    display:flex;
+}
+.modal {
+    background:var(--bg2);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:24px;
+    max-width:500px;
+    width:90%;
+}
+.modal-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:18px;
+}
+.modal-hs {
+    font-family:monospace;
+    font-size:26px;
+    font-weight:600;
+    color:var(--accent);
+}
+.modal-close {
+    background:none;
+    border:none;
+    color:var(--text3);
+    font-size:24px;
+    cursor:pointer;
+}
+.modal-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+    margin:18px 0;
+}
+.modal-card {
+    background:var(--bg3);
+    border-radius:14px;
+    padding:12px;
+    text-align:center;
+}
+.modal-card-label {
+    font-size:11px;
+    color:var(--text3);
+    margin-bottom:6px;
+}
+.modal-card-value {
+    font-family:monospace;
+    font-size:20px;
+}
+.install-note {
+    background:var(--bg3);
+    border-radius:var(--radius);
+    padding:10px 15px;
+    margin-bottom:20px;
+    font-size:12px;
+    text-align:center;
+    border-right:3px solid var(--accent2);
+}
+
+/* تحسين للشاشات الصغيرة جداً */
+@media (max-width: 640px) {
+    .app {
+        padding: 16px;
+    }
+    table {
+        min-width: 720px;
+        font-size: 13px;
+    }
+    th, td {
+        padding: 8px 10px;
+    }
+}
 </style>
 </head>
 <body>
@@ -78,7 +231,7 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
   </div>
   <div class="install-note">📌 <strong>تثبيت التطبيق:</strong> ⋮ → تثبيت التطبيق (أو أضف للشاشة الرئيسية)</div>
 
-  <!-- منطقة رفع الملف تظهر دائماً في البداية -->
+  <!-- منطقة رفع الملف -->
   <div id="uploadArea" class="upload-area">
     <div>📂 اسحب ملف CSV هنا أو انقر لاختياره</div>
     <button class="upload-btn" id="uploadBtn">اختر ملف التعريفة</button>
@@ -109,14 +262,36 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
   </div>
 
   <div id="loading" style="display: none; text-align:center; padding:50px;">⏳ جاري التحميل...</div>
+  
+  <!-- حاوية الجدول القابلة للتمرير -->
   <div class="table-wrapper" id="tableWrapper" style="display: none;">
-    <table><thead><tr><th data-col="0">كود HS</th><th data-col="1">وصف البضاعة</th><th>الوحدة</th><th data-col="3">رسم قياسي</th><th>بدل خدمات</th><th data-col="5">الرسم الكلي</th></tr></thead><tbody id="tableBody"></tbody></table>
+    <table>
+      <thead>
+        <tr><th data-col="0">كود HS</th><th data-col="1">وصف البضاعة</th><th>الوحدة</th><th data-col="3">رسم قياسي</th><th>بدل خدمات</th><th data-col="5">الرسم الكلي</th></tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
   </div>
+  
   <div class="empty-state" id="emptyState" style="display: none;"><div>📭</div><p>لا توجد نتائج</p></div>
   <div class="pagination" id="paginationArea"></div>
 </div>
 
-<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modal-header"><div><div class="modal-hs" id="modalHS"></div><div id="modalDesc"></div></div><button class="modal-close" onclick="closeModal()">✕</button></div><div id="modalNegative" style="display:none; background:#2c1a1a; padding:10px; border-radius:8px; margin:12px 0;"><span class="negative-badge">⛔ ممنوع (قائمة سلبية)</span></div><div class="modal-grid" id="modalGrid"><div><div class="modal-card-label">رسم قياسي</div><div class="modal-card-value" id="modalStandard"></div></div><div><div class="modal-card-label">بدل خدمات</div><div class="modal-card-value" id="modalService"></div></div><div><div class="modal-card-label">رسم كلي</div><div class="modal-card-value" id="modalTotal"></div></div></div><div id="modalUnit"></div></div></div>
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-hs" id="modalHS"></div><div id="modalDesc"></div></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalNegative" style="display:none; background:#2c1a1a; padding:10px; border-radius:8px; margin:12px 0;"><span class="negative-badge">⛔ ممنوع (قائمة سلبية)</span></div>
+    <div class="modal-grid" id="modalGrid">
+      <div><div class="modal-card-label">رسم قياسي</div><div class="modal-card-value" id="modalStandard"></div></div>
+      <div><div class="modal-card-label">بدل خدمات</div><div class="modal-card-value" id="modalService"></div></div>
+      <div><div class="modal-card-label">رسم كلي</div><div class="modal-card-value" id="modalTotal"></div></div>
+    </div>
+    <div id="modalUnit"></div>
+  </div>
+</div>
 
 <script>
     let tariffData = [];
@@ -146,7 +321,6 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); return true; } catch(e) { return false; }
     }
 
-    // تحميل البيانات من LocalStorage وعرضها
     function loadFromLocalStorageAndDisplay() {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) {
@@ -212,7 +386,6 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
         return result;
     }
 
-    // دالة رئيسية لمعالجة محتوى CSV (من رفع أو من مضمن)
     function processCSV(csvText, sourceName = 'ملف') {
         loadingDiv.style.display = 'block';
         const rows = parseCSV(csvText);
@@ -234,7 +407,6 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
         return true;
     }
 
-    // رفع ملف من المستخدم
     function loadFile(file) {
         if (!file) return;
         fileInfo.innerText = `جاري قراءة: ${file.name} ...`;
@@ -244,7 +416,6 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
         reader.readAsText(file, 'UTF-8');
     }
 
-    // محاولة تحميل ملف مضمن (اختياري)
     async function tryEmbeddedCSV() {
         try {
             const response = await fetch('tariff_data.csv');
@@ -259,7 +430,6 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
         return false;
     }
 
-    // إعادة تعيين: حذف البيانات وإظهار رفع الملف
     function resetAndShowUpload() {
         if (confirm('سيتم حذف البيانات المخزنة. هل تريد رفع ملف جديد؟')) {
             localStorage.removeItem(STORAGE_KEY);
@@ -275,7 +445,6 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
         }
     }
 
-    // دالات العرض (نفس السابق)
     function isPercentValue(val) { return typeof val === 'string' && (val.includes('%') || val.toLowerCase().includes('فاتورة')); }
     function parseDuty(val) { if (val === "قائمة سلبية") return NaN; if (typeof val === 'string' && val.includes('%')) { let n = parseFloat(val); return isNaN(n)?0:n; } let n = parseFloat(val); return isNaN(n)?0:n; }
     function formatNumber(v) { if (isNaN(v) || v==="") return v; return v.toLocaleString('ar'); }
@@ -379,12 +548,10 @@ mark{background:rgba(59,130,246,0.4);color:white;border-radius:3px;padding:0 2px
     uploadBtn.addEventListener('click', (e) => { e.stopPropagation(); fileInput.click(); });
     fileInput.addEventListener('change', (e) => { if(e.target.files.length) loadFile(e.target.files[0]); });
 
-    // بدء التشغيل: أولاً محاولة تحميل بيانات مخزنة، وإلا إظهار رفع الملف
+    // بدء التشغيل
     if (!loadFromLocalStorageAndDisplay()) {
-        // إذا لم توجد بيانات مخزنة، نحاول تحميل ملف مضمن (اختياري)
         tryEmbeddedCSV().then(success => {
             if (!success) {
-                // في حال عدم وجود ملف مضمن ولا بيانات مخزنة، نظهر رفع الملف
                 uploadArea.style.display = 'block';
                 loadingDiv.style.display = 'none';
                 fileInfo.innerText = 'لم يتم العثور على بيانات. يرجى رفع ملف CSV.';
